@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kartik — Master Skill List (3-Year AI Architect Roadmap)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;600&family=Inter+Tight:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e1014;
+    --paper:#f4efe6;
+    --paper-2:#ebe4d6;
+    --rule:#1a1c20;
+    --accent:#c2410c;    /* burnt orange */
+    --accent-2:#0b6b5b;  /* deep teal */
+    --accent-3:#1d4ed8;  /* deep blue */
+    --muted:#5a5249;
+    --red:#b91c1c;
+    --yellow:#a16207;
+    --green:#15803d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:"Inter Tight",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:48px 32px 96px}
+
+  /* Masthead */
+  .mast{border-bottom:3px double var(--rule);padding-bottom:22px;margin-bottom:36px;position:relative}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .eyebrow .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle}
+  h1.title{font-family:"Fraunces",serif;font-weight:800;font-size:clamp(40px,6vw,72px);line-height:.95;margin:0 0 12px;letter-spacing:-.02em}
+  h1.title em{font-style:italic;color:var(--accent);font-weight:600}
+  .subtitle{font-family:"Fraunces",serif;font-size:18px;font-style:italic;color:var(--muted);max-width:780px;margin:0}
+
+  /* Legend strip */
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:28px 0 8px;padding:14px 18px;background:var(--paper-2);border:1px solid var(--rule);border-left:6px solid var(--accent)}
+  .legend-item{display:flex;align-items:flex-start;gap:8px;flex:1;min-width:220px;font-size:13px}
+  .pri{font-family:"JetBrains Mono",monospace;font-weight:600;font-size:13px;white-space:nowrap}
+  .pri-r{color:var(--red)}.pri-y{color:var(--yellow)}.pri-g{color:var(--green)}
+  .legend-item .label{color:var(--muted);font-size:12px}
+  .legend-item .label strong{color:var(--ink);font-weight:600}
+
+  /* Stats row */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--rule);margin:22px 0 40px;background:var(--paper)}
+  .stat{padding:18px 18px;border-right:1px solid var(--rule)}
+  .stat:last-child{border-right:none}
+  .stat .n{font-family:"Fraunces",serif;font-size:32px;font-weight:800;line-height:1;display:block}
+  .stat .n .unit{font-size:14px;font-weight:400;color:var(--muted);margin-left:4px}
+  .stat .l{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:6px;display:block}
+  @media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--rule)}.stat:nth-child(2){border-right:none}}
+
+  /* Domain section */
+  .domain{margin:48px 0 0;page-break-inside:avoid}
+  .domain-head{display:flex;align-items:baseline;gap:16px;margin-bottom:6px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+  .dnum{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.1em}
+  .dtitle{font-family:"Fraunces",serif;font-size:28px;font-weight:800;margin:0;letter-spacing:-.01em;flex:1}
+  .dhours{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);white-space:nowrap}
+  .dintro{font-family:"Fraunces",serif;font-style:italic;color:var(--muted);font-size:15px;margin:10px 0 16px;max-width:900px}
+
+  /* Skill table */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:8px}
+  th{font-family:"JetBrains Mono",monospace;text-transform:uppercase;font-size:10px;letter-spacing:.18em;color:var(--muted);text-align:left;padding:8px 10px 10px;border-bottom:2px solid var(--rule);font-weight:600;background:transparent}
+  td{padding:11px 10px;border-bottom:1px dotted #c9c0ae;vertical-align:top}
+  tr:hover td{background:rgba(194,65,12,.04)}
+  td.pri-cell{width:48px;text-align:center}
+  td.skill-cell{font-weight:600;width:28%}
+  td.hrs-cell{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--accent-3);width:62px;white-space:nowrap;font-weight:600}
+  td.note-cell{color:#2a2722;font-size:13.5px;line-height:1.45}
+
+  /* Quote pull */
+  .pull{border-left:4px solid var(--accent);background:var(--paper-2);padding:16px 22px;margin:28px 0;font-family:"Fraunces",serif;font-style:italic;font-size:16px;line-height:1.55;max-width:920px}
+  .pull strong{font-style:normal;font-weight:700;color:var(--accent)}
+
+  /* Footer */
+  .footer{margin-top:64px;padding-top:22px;border-top:3px double var(--rule);font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* Print niceness */
+  @media print{
+    body{background:white}
+    .wrap{padding:24px}
+    tr:hover td{background:transparent}
+    .domain{break-inside:avoid}
+  }
+
+  /* === Interactive tracker styles === */
+  .track-col, .track-cell{width:200px;text-align:center;white-space:nowrap}
+  .track-cell{font-family:"JetBrains Mono",monospace;font-size:11px;padding:8px 10px}
+  .track-row{display:inline-flex;align-items:center;gap:6px;padding:3px 5px;border-radius:6px;transition:background .2s ease}
+  tr:hover .track-row{background:rgba(255,255,255,.4)}
+
+  /* --- Checkbox --- */
+  .track-row input[type=checkbox]{
+    appearance:none;-webkit-appearance:none;
+    width:20px;height:20px;
+    border:1.5px solid #9a9180;border-radius:5px;
+    background:linear-gradient(180deg,#fff 0%,#f5efe2 100%);
+    cursor:pointer;display:inline-grid;place-content:center;margin:0;
+    transition:transform .15s ease, border-color .15s ease, background .2s ease, box-shadow .2s ease;
+    flex-shrink:0;position:relative;
+    box-shadow:0 1px 0 rgba(0,0,0,.04), inset 0 1px 0 rgba(255,255,255,.6)
+  }
+  .track-row input[type=checkbox]:hover{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(194,65,12,.12), 0 1px 2px rgba(0,0,0,.08)
+  }
+  .track-row input[type=checkbox]:active{transform:scale(.92)}
+  .track-row input[type=checkbox]:focus-visible{
+    outline:none;box-shadow:0 0 0 3px rgba(194,65,12,.3)
+  }
+  .track-row input[type=checkbox]:checked{
+    background:linear-gradient(180deg,#0e8674 0%,#0b6b5b 100%);
+    border-color:#075449;
+    box-shadow:0 1px 2px rgba(11,107,91,.4), inset 0 1px 0 rgba(255,255,255,.25);
+    animation:cbPop .25s ease
+  }
+  .track-row input[type=checkbox]:checked::after{
+    content:"";
+    width:11px;height:6px;
+    border-left:2px solid white;border-bottom:2px solid white;
+    transform:rotate(-45deg) translate(1px,-1px);
+    border-radius:1px
+  }
+  @keyframes cbPop{
+    0%{transform:scale(1)} 40%{transform:scale(1.18)} 100%{transform:scale(1)}
+  }
+
+  tr.done td{background:#e3ead8;border-bottom-color:#b8c5a3}
+  tr.done td.skill-cell{color:var(--accent-2)}
+  tr.done:hover td{background:#dae5c8}
+  tr.done:hover .track-row{background:rgba(255,255,255,.5)}
+
+  /* --- Date picker --- */
+  .track-row input[type=date]{
+    appearance:none;-webkit-appearance:none;
+    border:1.5px solid #c4baa6;
+    border-radius:5px;
+    background:#fdfaf2;
+    font-family:"JetBrains Mono",monospace;
+    font-size:11px;font-weight:500;
+    padding:4px 6px;
+    width:108px;
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color .15s ease, box-shadow .2s ease, background .2s ease;
+    line-height:1.2
+  }
+  .track-row input[type=date]:hover{
+    border-color:var(--accent);background:#fff
+  }
+  .track-row input[type=date]:focus{
+    outline:none;border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(194,65,12,.15);background:#fff
+  }
+  .track-row input[type=date]::-webkit-calendar-picker-indicator{
+    cursor:pointer;opacity:.5;transition:opacity .15s ease;
+    filter:invert(15%) sepia(20%) saturate(800%) hue-rotate(345deg);
+    margin-left:2px
+  }
+  .track-row input[type=date]:hover::-webkit-calendar-picker-indicator{opacity:1}
+  .track-row input[type=date]:invalid,
+  .track-row input[type=date]:not(:focus):not([value]){color:#a8a08e}
+  /* Subtle "empty" state when date is blank */
+  .track-row input[type=date][value=""]{background:#f5efe2;border-style:dashed;border-color:#c9bfa9}
+
+  /* --- Note button --- */
+  .desc-btn{
+    width:28px;height:28px;
+    border:1.5px solid #c4baa6;border-radius:5px;
+    background:#fdfaf2;
+    color:#9a9180;
+    cursor:pointer;
+    display:inline-grid;place-content:center;padding:0;
+    transition:transform .15s ease, border-color .15s ease, background .2s ease, color .15s ease, box-shadow .2s ease;
+    flex-shrink:0;position:relative
+  }
+  .desc-btn svg{width:14px;height:14px;display:block;transition:transform .2s ease}
+  .desc-btn:hover{
+    border-color:var(--accent);color:var(--accent);background:#fff;
+    box-shadow:0 0 0 3px rgba(194,65,12,.12)
+  }
+  .desc-btn:hover svg{transform:rotate(-8deg) scale(1.08)}
+  .desc-btn:active{transform:scale(.92)}
+  .desc-btn:focus-visible{
+    outline:none;border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(194,65,12,.3)
+  }
+  .desc-btn.has-note{
+    background:linear-gradient(180deg,#d8590f 0%,#a93709 100%);
+    border-color:#902f08;color:white;
+    box-shadow:0 1px 2px rgba(169,55,9,.35), inset 0 1px 0 rgba(255,255,255,.2)
+  }
+  .desc-btn.has-note:hover{
+    background:linear-gradient(180deg,#e76418 0%,#b53d0b 100%);
+    color:white;border-color:#902f08;
+    box-shadow:0 0 0 3px rgba(194,65,12,.18), 0 2px 4px rgba(169,55,9,.4)
+  }
+  /* Dot badge on active note button */
+  .desc-btn.has-note::after{
+    content:"";position:absolute;top:-3px;right:-3px;
+    width:7px;height:7px;border-radius:50%;
+    background:#facc15;border:1.5px solid var(--paper);
+    box-shadow:0 1px 2px rgba(0,0,0,.2)
+  }
+
+  /* === Toolbar === */
+  .toolbar{
+    position:sticky;top:0;z-index:50;background:var(--paper);border:1px solid var(--rule);
+    border-left:6px solid var(--accent-2);padding:14px 18px;margin:0 0 28px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    box-shadow:0 2px 12px rgba(0,0,0,.06)
+  }
+  .toolbar .progress-info{
+    display:flex;align-items:baseline;gap:10px;font-family:"JetBrains Mono",monospace;
+    font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)
+  }
+  .toolbar .progress-info .pct{
+    font-family:"Fraunces",serif;font-size:24px;font-weight:800;color:var(--accent-2);
+    letter-spacing:-.01em;text-transform:none
+  }
+  .toolbar .bar{
+    flex:1;min-width:140px;height:8px;background:var(--paper-2);border:1px solid var(--rule);
+    position:relative;overflow:hidden
+  }
+  .toolbar .bar-fill{
+    position:absolute;left:0;top:0;bottom:0;background:var(--accent-2);width:0%;transition:width .3s ease
+  }
+  .toolbar button, .toolbar label.file-btn{
+    font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    padding:8px 12px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);
+    cursor:pointer;transition:all .15s ease;font-weight:600
+  }
+  .toolbar button:hover, .toolbar label.file-btn:hover{background:var(--ink);color:var(--paper)}
+  .toolbar button.danger:hover{background:var(--red);color:white;border-color:var(--red)}
+  .toolbar label.file-btn input{display:none}
+
+  /* === Modal === */
+  .modal-backdrop{
+    display:none;position:fixed;inset:0;background:rgba(14,16,20,.55);z-index:100;
+    align-items:center;justify-content:center;padding:20px
+  }
+  .modal-backdrop.open{display:flex}
+  .modal{
+    background:var(--paper);border:1px solid var(--rule);border-top:6px solid var(--accent);
+    max-width:560px;width:100%;padding:28px;max-height:90vh;overflow-y:auto
+  }
+  .modal h3{font-family:"Fraunces",serif;font-size:24px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+  .modal .modal-sub{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .modal textarea{
+    width:100%;min-height:180px;border:1px solid var(--rule);background:var(--paper-2);
+    font-family:"Inter Tight",sans-serif;font-size:14px;padding:12px;resize:vertical;color:var(--ink);
+    line-height:1.55
+  }
+  .modal textarea:focus{outline:2px solid var(--accent);outline-offset:-2px}
+  .modal-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+  .modal-actions button{
+    font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    padding:10px 16px;border:1px solid var(--rule);background:var(--paper);cursor:pointer;font-weight:600;
+    transition:all .15s ease
+  }
+  .modal-actions button.primary{background:var(--accent);color:white;border-color:var(--accent)}
+  .modal-actions button.primary:hover{background:#9a3308}
+  .modal-actions button.secondary:hover{background:var(--ink);color:var(--paper)}
+
+  /* Hide interactive bits when printing — back to clean reference layout */
+  @media print{
+    .toolbar{display:none}
+    .track-col, .track-cell{display:none}
+    tr.done td{background:transparent;color:var(--ink)}
+    tr.done td.skill-cell{color:var(--ink)}
+  }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ========== TOOLBAR ========== -->
+  <div class="toolbar" id="toolbar">
+    <div class="progress-info">
+      <span class="pct" id="pct">0%</span>
+      <span><span id="done-count">0</span> / <span id="total-count">0</span> done</span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+    <button id="export-btn" title="Download your progress as JSON">↓ Export</button>
+    <label class="file-btn" title="Load a previously exported JSON">↑ Import<input type="file" id="import-input" accept=".json,application/json"></label>
+    <button id="reset-btn" class="danger" title="Clear all progress">⟲ Reset</button>
+  </div>
+
+
+  <!-- ========== MASTHEAD ========== -->
+  <header class="mast">
+    <div class="eyebrow">
+      <span><span class="dot"></span>Master Skill List · v1 · Consolidated from 3 roadmaps</span>
+      <span>Kartik C. Biswas · May 2026</span>
+    </div>
+    <h1 class="title">Everything I need <em>to learn.</em></h1>
+    <p class="subtitle">A single, deduplicated, prioritized index of every term, topic, framework, and skill named across the 25-Year, 14-Month, and Merged 3-Year roadmaps. Hours are realistic focused-study estimates. Notes are intentionally short — they exist to tell you <em>what it is and when to use it</em>, not to teach it.</p>
+  </header>
+
+  <!-- ========== LEGEND ========== -->
+  <div class="legend">
+    <div class="legend-item">
+      <span class="pri pri-r">🔴 CRITICAL</span>
+      <span class="label">Learn <strong>deeply</strong>. Hands-on, by-hand once, then production.</span>
+    </div>
+    <div class="legend-item">
+      <span class="pri pri-y">🟡 IMPORTANT</span>
+      <span class="label">Understand <strong>well</strong>. Read deeply, apply at least once.</span>
+    </div>
+    <div class="legend-item">
+      <span class="pri pri-g">🟢 AWARENESS</span>
+      <span class="label">Know <strong>what it is</strong> and <strong>when</strong> to reach for it. Skim, don't drill.</span>
+    </div>
+  </div>
+
+  <!-- ========== STATS ========== -->
+  <div class="stats">
+    <div class="stat"><span class="n">~1,400<span class="unit">hrs</span></span><span class="l">Total Focused Learning</span></div>
+    <div class="stat"><span class="n">11<span class="unit">domains</span></span><span class="l">Knowledge Areas</span></div>
+    <div class="stat"><span class="n">21.5<span class="unit">hrs/wk</span></span><span class="l">Study Budget</span></div>
+    <div class="stat"><span class="n">3<span class="unit">years</span></span><span class="l">Execution Horizon</span></div>
+  </div>
+
+  <div class="pull">
+    <strong>Reading order:</strong> Year 1 = Domains 1–7 + 9 + 11 (technical depth). Year 2 = Domain 8 + 10 added on top (architecture & governance). Year 3 = vertical-specific depth from your chosen domain (healthcare / fintech / legal / industrial). <strong>Stop hard at Domain 5</strong> — no measure theory, no theoretical ML proofs, ever.
+  </div>
+
+  <!-- ========== DOMAIN 1 — LLM INTERNALS ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D01</span><h2 class="dtitle">LLM Internals</h2><span class="dhours">≈ 41 hrs</span></div>
+    <p class="dintro">What's happening inside the models you call every day. Stop treating GPT-4o as a black box.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D01-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Tokenization (BPE, WordPiece, SentencePiece)</td><td class="hrs-cell">2</td><td class="note-cell">Why tokens, not words. Cost & context-window implications.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Embeddings</td><td class="hrs-cell">4</td><td class="note-cell">Dense vectors, semantic similarity, embedding models ≠ LLMs.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Attention mechanism (self-attention, Q/K/V)</td><td class="hrs-cell">6</td><td class="note-cell">The core of transformers. O(n²) scaling — why context costs explode.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Transformer architecture</td><td class="hrs-cell">8</td><td class="note-cell">Encoder-only / decoder-only / encoder-decoder. Know which family each model is.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-05"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Context window & KV cache</td><td class="hrs-cell">2</td><td class="note-cell">Why limited, what happens at overflow, memory cost of long context.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-06"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Sampling: temperature, top-p, top-k</td><td class="hrs-cell">2</td><td class="note-cell">How models choose next token. When to use each setting.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-07"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Pretraining vs Fine-tuning vs Instruction tuning</td><td class="hrs-cell">4</td><td class="note-cell">What each is, cost order of magnitude, when each makes business sense.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-08"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Hallucination — mechanical cause</td><td class="hrs-cell">3</td><td class="note-cell">Not "the model lies." Probabilistic next-token generation under uncertainty. Detection & mitigation.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">RLHF / DPO</td><td class="hrs-cell">3</td><td class="note-cell">Conceptual only. How models get aligned. You won't train this, you must explain it.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-10"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Quantization (INT8 / INT4 / GGUF)</td><td class="hrs-cell">3</td><td class="note-cell">How OS models shrink for laptop/edge inference. Quality vs size trade-off.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-11"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">LoRA / QLoRA</td><td class="hrs-cell">4</td><td class="note-cell">Parameter-efficient fine-tuning. You will actually do this in Q2 of Year 1.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-12"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Mixture of Experts (MoE)</td><td class="hrs-cell">1</td><td class="note-cell">Why GPT-4 and DeepSeek route tokens through experts. Awareness only.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-13"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Speculative decoding</td><td class="hrs-cell">1</td><td class="note-cell">Inference speed trick. Small "draft" model proposes, large model verifies.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D01-14"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Flash Attention</td><td class="hrs-cell">1</td><td class="note-cell">Memory-efficient attention kernel. Know it exists, know it matters for long context.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 2 — RETRIEVAL & RAG ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D02</span><h2 class="dtitle">Retrieval &amp; RAG</h2><span class="dhours">≈ 31 hrs</span></div>
+    <p class="dintro">Most "broken AI" is actually broken retrieval. This is where your current production bots live or die.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D02-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Cosine similarity</td><td class="hrs-cell">2</td><td class="note-cell">Angle between vectors, not distance. The math behind embedding search.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Vector DB / index structures (HNSW, IVF)</td><td class="hrs-cell">4</td><td class="note-cell">What's actually happening under the hood when "vector search" runs.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">BM25 / lexical search</td><td class="hrs-cell">2</td><td class="note-cell">Classic keyword scoring. Still beats vectors on exact-term enterprise queries.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Hybrid search + RRF</td><td class="hrs-cell">3</td><td class="note-cell">Dense + sparse fused via Reciprocal Rank Fusion. Production default.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-05"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Chunking strategies</td><td class="hrs-cell">4</td><td class="note-cell">Fixed-size, semantic, recursive, parent-document. Where most RAG silently fails.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-06"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Reranking (cross-encoders)</td><td class="hrs-cell">3</td><td class="note-cell">Two-stage retrieval: recall many, rerank top. Almost always beats one-stage.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-07"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">HyDE (Hypothetical Doc Embeddings)</td><td class="hrs-cell">2</td><td class="note-cell">LLM hallucinates an "ideal answer" first, then searches with that. Helps on vague queries.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-08"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Multi-query retrieval</td><td class="hrs-cell">2</td><td class="note-cell">Generate N reformulations of the user question, retrieve for each, merge.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Contextual retrieval (Anthropic)</td><td class="hrs-cell">2</td><td class="note-cell">Prepend an LLM-generated context blurb to each chunk before embedding. Read the original post.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-10"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Query rewriting / expansion</td><td class="hrs-cell">2</td><td class="note-cell">Often higher-impact than fancy embeddings. Cheap to add.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-11"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">GraphRAG</td><td class="hrs-cell">2</td><td class="note-cell">Microsoft approach — retrieve from a knowledge graph. Powerful but expensive.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D02-12"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">ColBERT / late interaction</td><td class="hrs-cell">1</td><td class="note-cell">Token-level matching instead of doc-level embeddings. Awareness only.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 3 — AGENTS & TOOLS ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D03</span><h2 class="dtitle">Agents &amp; Tool Use</h2><span class="dhours">≈ 33 hrs</span></div>
+    <p class="dintro">Production agents — not demos. The skill that puts you ahead of 95% of "AI engineers."</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D03-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Function calling / tool use</td><td class="hrs-cell">4</td><td class="note-cell">Schema design, error handling, parallel calls — beyond the API tutorial.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">ReAct pattern (Reason + Act)</td><td class="hrs-cell">3</td><td class="note-cell">Foundation of most agents. Build one without a framework once.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Agent memory: short / long / episodic</td><td class="hrs-cell">4</td><td class="note-cell">Sliding window vs summarization vs vector memory. How to actually implement.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Multi-agent orchestration patterns</td><td class="hrs-cell">6</td><td class="note-cell">Sequential, hierarchical, collaborative. When each fits.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-05"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Model Context Protocol (MCP)</td><td class="hrs-cell">3</td><td class="note-cell">Anthropic's open standard for tool/context plumbing. Becoming the default.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-06"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Plan-and-Execute pattern</td><td class="hrs-cell">2</td><td class="note-cell">Plan all steps up front, then execute. Alternative to ReAct's loop.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-07"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Reflection / self-critique</td><td class="hrs-cell">2</td><td class="note-cell">Agent reviews its own output and revises. Cheap quality lift.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-08"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Semantic Kernel internals</td><td class="hrs-cell">4</td><td class="note-cell">You use it daily — master Kernel, Plugins, Planners, Memory deeply.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">LangGraph</td><td class="hrs-cell">4</td><td class="note-cell">State-machine approach to agents. Worth knowing even if you stay in SK.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D03-10"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">AutoGen / CrewAI</td><td class="hrs-cell">2</td><td class="note-cell">Multi-agent frameworks. Awareness — know when someone proposes them.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 4 — EVALUATION & LLMOPS ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D04</span><h2 class="dtitle">Evaluation &amp; LLMOps</h2><span class="dhours">≈ 35 hrs <em style="color:var(--accent);font-style:italic;font-family:Fraunces,serif">— your strongest moat</em></span></div>
+    <p class="dintro">Go deeper here than most engineers do. This is the discipline that separates a demo from a system.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D04-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">LLM-as-judge</td><td class="hrs-cell">4</td><td class="note-cell">Use one LLM to score another. Setup, biases (position, verbosity, self-preference), when it fails.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Golden datasets</td><td class="hrs-cell">3</td><td class="note-cell">30–50 hand-crafted question→ideal-answer pairs. Foundation of every honest eval.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Regression testing for LLMs</td><td class="hrs-cell">3</td><td class="note-cell">CI that re-runs evals on every prompt/model change. Catches silent breakage.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">RAG eval metrics — Ragas</td><td class="hrs-cell">4</td><td class="note-cell">Faithfulness, answer relevance, context precision, context recall. Install and run.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-05"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Observability for LLM apps</td><td class="hrs-cell">4</td><td class="note-cell">Tracing, spans, debugging non-deterministic systems. Langfuse / Phoenix / Arize.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-06"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Cost tracking &amp; optimization</td><td class="hrs-cell">3</td><td class="note-cell">Per-request cost, per-user, per-feature. Model routing, caching.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-07"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Latency optimization</td><td class="hrs-cell">3</td><td class="note-cell">Streaming, parallel tool calls, prompt caching. UX is dominated by latency.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-08"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Prompt versioning</td><td class="hrs-cell">2</td><td class="note-cell">Git for prompts. A/B testing in production.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Guardrails</td><td class="hrs-cell">3</td><td class="note-cell">Content filtering, PII detection, jailbreak detection. Azure Content Safety + Prompt Shields.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-10"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Semantic caching</td><td class="hrs-cell">2</td><td class="note-cell">Cache at meaning-level, not exact-match. Big cost savings on repetitive queries.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-11"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Prompt caching</td><td class="hrs-cell">1</td><td class="note-cell">Provider feature (Anthropic, OpenAI). Cache long system prompts cheaply.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-12"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Shadow deployment for LLMs</td><td class="hrs-cell">1</td><td class="note-cell">Run new model alongside old, compare silently. Awareness.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D04-13"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Canary releases for prompts</td><td class="hrs-cell">1</td><td class="note-cell">Roll new prompt to 1% → 10% → 100%. Awareness.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 5 — MATH (BOUNDED) ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D05</span><h2 class="dtitle">Math Foundations <em style="color:var(--accent);font-style:italic;font-family:Fraunces,serif;font-weight:600">(bounded — stop here)</em></h2><span class="dhours">≈ 42 hrs</span></div>
+    <p class="dintro">Just enough to read papers, debug training, work as a peer with data scientists. No measure theory. No proofs. No theoretical ML.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D05-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Vectors, matrices, matrix multiplication</td><td class="hrs-cell">8</td><td class="note-cell">Operationally fluent in NumPy. Geometric intuition matters more than proofs.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Dot product, norms, projections</td><td class="hrs-cell">4</td><td class="note-cell">The math under cosine similarity, which is the math under embedding search.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Gradient, partial derivatives, chain rule</td><td class="hrs-cell">6</td><td class="note-cell">Enough to derive backprop by hand once. Then move on.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Probability — distributions, Bayes, expectation</td><td class="hrs-cell">6</td><td class="note-cell">Applied level. Normal, Bernoulli, binomial, categorical. Bayes' theorem with concrete problems.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-05"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Eigenvalues / eigenvectors / SVD</td><td class="hrs-cell">4</td><td class="note-cell">SVD is the math behind PCA and behind LoRA. Conceptual + np.linalg practice.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-06"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Gradient descent (SGD, Adam)</td><td class="hrs-cell">4</td><td class="note-cell">Understand the updates. Don't derive Adam from scratch.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-07"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">MLE / MAP</td><td class="hrs-cell">3</td><td class="note-cell">Foundation for understanding loss functions. Why cross-entropy is "the" classification loss.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-08"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Hypothesis testing, p-values, confidence intervals</td><td class="hrs-cell">4</td><td class="note-cell">For A/B testing AI systems and evaluating eval results honestly.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-09"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Convexity</td><td class="hrs-cell">1</td><td class="note-cell">Why some losses guarantee global optima and others don't. Awareness.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D05-10"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Information theory (entropy, cross-entropy, KL)</td><td class="hrs-cell">2</td><td class="note-cell">Cross-entropy IS the LLM loss function. Read Olah's "Visual Information Theory."</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 6 — CLASSICAL ML ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D06</span><h2 class="dtitle">Classical ML</h2><span class="dhours">≈ 37 hrs</span></div>
+    <p class="dintro">Do not skip. Trees still beat neural nets on tabular data, and "data leakage" is the #1 reason great offline models fail in production.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D06-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Linear &amp; logistic regression + L1/L2</td><td class="hrs-cell">4</td><td class="note-cell">From scratch in NumPy once. Including regularization intuition.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Decision trees, Random Forests, XGBoost / LightGBM</td><td class="hrs-cell">6</td><td class="note-cell">Still wins Kaggle on tabular data. Know hyperparameters: learning_rate, max_depth, n_estimators.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Train / val / test splits + cross-validation</td><td class="hrs-cell">3</td><td class="note-cell">Done properly. K-fold, stratified, time-series CV.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Bias–variance trade-off</td><td class="hrs-cell">2</td><td class="note-cell">The conceptual frame for under/overfitting. Fundamental.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-05"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Eval metrics: precision, recall, F1, AUC, calibration</td><td class="hrs-cell">4</td><td class="note-cell">When each is appropriate. PR vs ROC curves. Why probabilities from boosters need calibration.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-06"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Feature engineering</td><td class="hrs-cell">6</td><td class="note-cell">Hands-on across multiple projects. Encoding, transformations, datetime, text features.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-07"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Data leakage</td><td class="hrs-cell">2</td><td class="note-cell">Target leakage, train-test contamination, temporal leakage. #1 cause of production failure.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-08"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">k-means &amp; hierarchical clustering</td><td class="hrs-cell">3</td><td class="note-cell">Unsupervised baseline. Limits and assumptions.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">PCA, t-SNE, UMAP</td><td class="hrs-cell">3</td><td class="note-cell">Dimensionality reduction & visualization. UMAP is the modern default.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-10"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">SVM</td><td class="hrs-cell">2</td><td class="note-cell">Conceptual only. Kernel trick. Historical importance.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-11"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Naive Bayes, k-NN</td><td class="hrs-cell">2</td><td class="note-cell">Simple baselines. Still useful in some text/anomaly tasks.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-12"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Imbalanced data: SMOTE, class weights, threshold tuning</td><td class="hrs-cell">3</td><td class="note-cell">Fraud / medical / churn — most real problems are imbalanced.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D06-13"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Time-series basics</td><td class="hrs-cell">2</td><td class="note-cell">Upgrades to 🔴 if your vertical is forecasting. ARIMA, Prophet, lagged features.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 7 — DEEP LEARNING ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D07</span><h2 class="dtitle">Deep Learning</h2><span class="dhours">≈ 42 hrs</span></div>
+    <p class="dintro">PyTorch won. Implement backprop by hand once, then live in the framework.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D07-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Neural network fundamentals</td><td class="hrs-cell">6</td><td class="note-cell">Forward + backward pass by hand once. 2-layer NN in pure NumPy. Pays off forever.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">PyTorch (tensors, autograd, nn.Module, training loops)</td><td class="hrs-cell">10</td><td class="note-cell">Fluent. Tensors, autograd, DataLoader, debugging gradients.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Activation functions</td><td class="hrs-cell">2</td><td class="note-cell">ReLU, GELU, SiLU. Why dead ReLUs happen. Why GELU dominates in transformers.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Loss functions</td><td class="hrs-cell">3</td><td class="note-cell">Cross-entropy, MSE, focal loss. When each is appropriate.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-05"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Optimizers + LR schedules</td><td class="hrs-cell">3</td><td class="note-cell">SGD, Adam, AdamW. Cosine and warmup schedules.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-06"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Regularization</td><td class="hrs-cell">3</td><td class="note-cell">Dropout, batch norm, layer norm, weight decay. Why each works.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-07"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">CNNs</td><td class="hrs-cell">4</td><td class="note-cell">Foundation even outside vision. Convolutions, pooling, receptive fields.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-08"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Hugging Face Transformers library</td><td class="hrs-cell">8</td><td class="note-cell">You'll use this heavily for fine-tuning and inference.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">PEFT library (LoRA &amp; friends)</td><td class="hrs-cell">4</td><td class="note-cell">HF's parameter-efficient fine-tuning. Hands-on for your Q2 capstone.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-10"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">RNNs / LSTMs</td><td class="hrs-cell">2</td><td class="note-cell">Mostly historical. Useful context for why transformers won.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-11"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">GANs</td><td class="hrs-cell">1</td><td class="note-cell">Awareness only. Largely supplanted by diffusion for generation.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D07-12"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Diffusion models</td><td class="hrs-cell">2</td><td class="note-cell">Upgrades to 🔴 if image-gen becomes your vertical.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 8 — ARCHITECTURE & SYSTEM DESIGN ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D08</span><h2 class="dtitle">Architecture &amp; System Design <em style="color:var(--muted);font-style:italic;font-family:Fraunces,serif">(Year 2 focus)</em></h2><span class="dhours">≈ 248 hrs</span></div>
+    <p class="dintro">Vocabulary &amp; formal communication, not relearning. You already build distributed systems — now learn to <em>name</em> what you build.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D08-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">C4 model (Context, Container, Component, Code)</td><td class="hrs-cell">8</td><td class="note-cell">The canonical architecture-diagram vocabulary. Draw your past projects in all 4 levels.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Architecture Decision Records (ADRs)</td><td class="hrs-cell">10</td><td class="note-cell">Context → Options → Decision → Consequences. Architect-level written communication.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">System design interview practice</td><td class="hrs-cell">50</td><td class="note-cell">15+ mock interviews. Design RAG-at-scale, multi-agent enterprise systems, real-time AI monitoring.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Multi-tenant SaaS patterns</td><td class="hrs-cell">25</td><td class="note-cell">Silo / pool / bridge isolation. Tenant-aware retrieval, row-level security in AI Search.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-05"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">STRIDE threat modeling for AI</td><td class="hrs-cell">25</td><td class="note-cell">Spoofing/Tampering/Repudiation/Info-disclosure/DoS/Elevation. Plus AI-specific: prompt injection, model poisoning, data leakage.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-06"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Distributed observability (OpenTelemetry)</td><td class="hrs-cell">30</td><td class="note-cell">Traces, metrics, logs unified. Tail-based sampling. Cross-service correlation.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-07"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Database design at architect level</td><td class="hrs-cell">25</td><td class="note-cell">Sharding strategies, hot-partition mitigation, execution plan reading.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-08"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Cloud-native patterns formalized</td><td class="hrs-cell">25</td><td class="note-cell">Saga (choreography vs orchestration), Bulkhead, Circuit Breaker, CQRS, event sourcing — applied to AI services.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Zero Trust + private endpoints</td><td class="hrs-cell">20</td><td class="note-cell">Enterprise security baseline. Azure Private Link, managed identities.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-10"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Multi-region failover, error budgets</td><td class="hrs-cell">15</td><td class="note-cell">High-availability AI architecture. SLO/SLI thinking.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D08-11"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">IaC at architect level (Bicep, Terraform)</td><td class="hrs-cell">15</td><td class="note-cell">Modules, state management, drift. Not just templates.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 9 — PRODUCTION INFRASTRUCTURE ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D09</span><h2 class="dtitle">Production Infrastructure</h2><span class="dhours">≈ 60 hrs</span></div>
+    <p class="dintro">Go deep on Azure (your existing moat). Wide-but-shallow on the rest. PyTorch + HF + Azure ML is the real stack.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D09-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Azure ML end-to-end</td><td class="hrs-cell">8</td><td class="note-cell">Workspace, compute, jobs, model registry, online endpoints, data-drift monitoring.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Azure AI Foundry</td><td class="hrs-cell">4</td><td class="note-cell">The unified Azure AI platform — projects, model deployments, connections.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Model serving patterns</td><td class="hrs-cell">4</td><td class="note-cell">Batch vs real-time vs streaming. When each fits.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Azure AI Search — deep</td><td class="hrs-cell">6</td><td class="note-cell">Vector DB you use daily. Hybrid + semantic ranker + scoring profiles. Master the full surface.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-05"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">FastAPI for ML services</td><td class="hrs-cell">4</td><td class="note-cell">Standard way to wrap models as HTTP services.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-06"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">MLflow / Weights &amp; Biases</td><td class="hrs-cell">5</td><td class="note-cell">Experiment tracking. Pick one, use it consistently.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-07"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Docker for ML workloads</td><td class="hrs-cell">3</td><td class="note-cell">CUDA base images, multi-stage builds, slimming down.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-08"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Kubernetes for AI serving</td><td class="hrs-cell">25</td><td class="note-cell">KServe basics, GPU scheduling, autoscaling AI workloads. Year 2 deepening.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Azure Document Intelligence</td><td class="hrs-cell">3</td><td class="note-cell">Extract structured data from forms/PDFs before AI Search ingestion.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-10"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">Ray, vLLM, TGI</td><td class="hrs-cell">2</td><td class="note-cell">High-throughput LLM serving frameworks. Awareness only.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D09-11"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">ONNX</td><td class="hrs-cell">1</td><td class="note-cell">Model interchange format. Useful for edge / cross-runtime deployment.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 10 — GOVERNANCE, RESPONSIBLE AI, BUSINESS ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D10</span><h2 class="dtitle">Governance, Responsible AI &amp; Business <em style="color:var(--muted);font-style:italic;font-family:Fraunces,serif">(Year 2)</em></h2><span class="dhours">≈ 255 hrs</span></div>
+    <p class="dintro">Increasingly a hiring filter in EU/US. Plus: this is what turns "senior engineer" salaries into "architect" salaries.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D10-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">EU AI Act + GDPR for AI systems</td><td class="hrs-cell">25</td><td class="note-cell">Risk classification, data flows, right to explanation, deletion processes.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Fairness audits</td><td class="hrs-cell">20</td><td class="note-cell">Demographic parity, equalized odds, disparate impact. Test your own systems for bias.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Explainability — SHAP, LIME, model cards</td><td class="hrs-cell">20</td><td class="note-cell">Per-prediction feature attribution + transparent model documentation.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-04"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">AI risk management</td><td class="hrs-cell">25</td><td class="note-cell">Assessment frameworks, mitigation controls, incident response plans.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-05"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">ROI / TCO / build-vs-buy frameworks</td><td class="hrs-cell">30</td><td class="note-cell">Talking to CFOs in financial language. Sensitivity analysis on AI investments.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-06"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Executive communication for technologists</td><td class="hrs-cell">30</td><td class="note-cell">ADRs as decision artifacts. Pyramid Principle. Technical → business translation.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-07"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">FinOps for AI / cost engineering</td><td class="hrs-cell">25</td><td class="note-cell">Tagging, cost allocation, showback/chargeback. Reserved capacity for Azure OpenAI.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-08"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Stakeholder mapping</td><td class="hrs-cell">10</td><td class="note-cell">RACI, influence/interest matrices. Who needs to be in which conversation.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-09"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Mentorship as structured artifact</td><td class="hrs-cell">30</td><td class="note-cell">8-session formal mentoring of one junior engineer, outcomes documented publicly. Career signal.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D10-10"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Public speaking</td><td class="hrs-cell">40</td><td class="note-cell">Including prep + rehearsal. One conference talk per year by Year 2.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== DOMAIN 11 — TOOLING ========== -->
+  <section class="domain">
+    <div class="domain-head"><span class="dnum">D11</span><h2 class="dtitle">Tooling You'll Use Daily</h2><span class="dhours">≈ 31 hrs</span></div>
+    <p class="dintro">If something here feels rusty, fix it in Week 1 of Year 1. These are friction in every later task.</p>
+    <table>
+      <thead><tr><th>P</th><th>Skill / Term</th><th>Hrs</th><th>Short description</th><th class="track-col">Track</th></tr></thead>
+      <tbody>
+        <tr data-skill-id="D11-01"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Python: NumPy, Pandas</td><td class="hrs-cell">10</td><td class="note-cell">If rusty. NumPy fluency is non-negotiable for math weeks; Pandas for everything else.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D11-02"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Jupyter / VS Code notebooks</td><td class="hrs-cell">2</td><td class="note-cell">Setup once, learn by doing. Use the VS Code Jupyter extension.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D11-03"><td class="pri-cell pri-r">🔴</td><td class="skill-cell">Git for ML projects + DVC awareness</td><td class="hrs-cell">2</td><td class="note-cell">Branching for experiments, .gitignore for large files, DVC for data versioning.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D11-04"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">Hugging Face Hub</td><td class="hrs-cell">3</td><td class="note-cell">Datasets, models, spaces. Where everything in OS AI lives.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D11-05"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">OpenAI &amp; Anthropic SDKs — deeply</td><td class="hrs-cell">8</td><td class="note-cell">Streaming, function calling, prompt caching, retries. Not just hello-world.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D11-06"><td class="pri-cell pri-y">🟡</td><td class="skill-cell">LangChain</td><td class="hrs-cell">6</td><td class="note-cell">Know it well. Be skeptical of overuse — most LangChain code becomes 10 lines of plain Python.</td><td class="track-cell"></td></tr>
+        <tr data-skill-id="D11-07"><td class="pri-cell pri-g">🟢</td><td class="skill-cell">LlamaIndex</td><td class="hrs-cell">2</td><td class="note-cell">Best chunking docs in the industry. Useful even if you don't use the framework.</td><td class="track-cell"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== CLOSING NOTE ========== -->
+  <div class="pull" style="margin-top:48px">
+    <strong>What's deliberately not on this list:</strong> TensorFlow, measure theory, functional analysis, theoretical ML proofs, computer vision (unless it's your vertical), reinforcement learning (unless it's your vertical), board governance / advisory boards (premature). Plus: every framework that launched in the last 3 months. Wait 3 months before learning it — most die.
+  </div>
+
+  <footer class="footer">
+    <span>Kartik C. Biswas · AI Architect Roadmap · Master Skill List v1</span>
+    <span>~280 hrs Year 1 essentials · ~1,400 hrs full 3-year arc</span>
+  </footer>
+
+  <!-- ========== DESCRIPTION MODAL ========== -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <h3 id="modal-title">Notes</h3>
+      <div class="modal-sub" id="modal-sub">—</div>
+      <textarea id="modal-text" placeholder="What did you learn? Key insights, links to your blog post or repo, gotchas, things to revisit…"></textarea>
+      <div class="modal-actions">
+        <button class="secondary" id="modal-cancel">Cancel</button>
+        <button class="primary" id="modal-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const STORAGE_KEY = "kartik_skill_progress_v1";
+
+  // Load existing progress from localStorage
+  let progress = {};
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) progress = JSON.parse(raw);
+  } catch(e){ progress = {}; }
+
+  function save(){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+    catch(e){ console.warn("localStorage save failed", e); }
+  }
+
+  function getSkillData(id){
+    if (!progress[id]) progress[id] = { done:false, date:"", note:"" };
+    return progress[id];
+  }
+
+  // Build interactive controls into every skill row
+  const rows = document.querySelectorAll('tr[data-skill-id]');
+  rows.forEach(tr => {
+    const id = tr.getAttribute('data-skill-id');
+    const data = getSkillData(id);
+    const skillName = tr.querySelector('td.skill-cell').textContent.trim();
+    const trackCell = tr.querySelector('td.track-cell');
+
+    const wrap = document.createElement('div');
+    wrap.className = 'track-row';
+
+    // Checkbox
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = !!data.done;
+    cb.title = 'Mark as done';
+    cb.addEventListener('change', () => {
+      data.done = cb.checked;
+      // Auto-fill today's date when first checked, if no date yet
+      if (cb.checked && !data.date){
+        const today = new Date().toISOString().slice(0,10);
+        data.date = today;
+        dateInput.value = today;
+      }
+      tr.classList.toggle('done', cb.checked);
+      save();
+      updateProgress();
+    });
+
+    // Date input
+    const dateInput = document.createElement('input');
+    dateInput.type = 'date';
+    dateInput.value = data.date || '';
+    dateInput.title = 'Completion date';
+    dateInput.addEventListener('change', () => {
+      data.date = dateInput.value;
+      save();
+    });
+
+    // Description button (icon-only)
+    const noteBtn = document.createElement('button');
+    noteBtn.className = 'desc-btn' + (data.note && data.note.trim() ? ' has-note' : '');
+    noteBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
+    noteBtn.title = 'Add / view notes';
+    noteBtn.addEventListener('click', () => openModal(id, skillName));
+
+    wrap.appendChild(cb);
+    wrap.appendChild(dateInput);
+    wrap.appendChild(noteBtn);
+    trackCell.appendChild(wrap);
+
+    if (data.done) tr.classList.add('done');
+  });
+
+  // Progress bar
+  function updateProgress(){
+    const total = rows.length;
+    let done = 0;
+    rows.forEach(tr => {
+      const id = tr.getAttribute('data-skill-id');
+      if (progress[id] && progress[id].done) done++;
+    });
+    const pct = total ? Math.round((done/total)*100) : 0;
+    document.getElementById('pct').textContent = pct + '%';
+    document.getElementById('done-count').textContent = done;
+    document.getElementById('total-count').textContent = total;
+    document.getElementById('bar-fill').style.width = pct + '%';
+  }
+  updateProgress();
+
+  // Modal logic
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalSub = document.getElementById('modal-sub');
+  const modalText = document.getElementById('modal-text');
+  let currentEditId = null;
+
+  function openModal(id, skillName){
+    currentEditId = id;
+    modalTitle.textContent = skillName;
+    modalSub.textContent = id;
+    modalText.value = (progress[id] && progress[id].note) || '';
+    modal.classList.add('open');
+    setTimeout(() => modalText.focus(), 50);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    currentEditId = null;
+  }
+  document.getElementById('modal-cancel').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && modal.classList.contains('open')) {
+      document.getElementById('modal-save').click();
+    }
+  });
+  document.getElementById('modal-save').addEventListener('click', () => {
+    if (!currentEditId) return;
+    const data = getSkillData(currentEditId);
+    data.note = modalText.value;
+    save();
+    // Update button appearance for this row
+    const tr = document.querySelector(`tr[data-skill-id="${currentEditId}"]`);
+    if (tr){
+      const btn = tr.querySelector('.desc-btn');
+      btn.classList.toggle('has-note', !!data.note.trim());
+    }
+    closeModal();
+  });
+
+  // Export
+  document.getElementById('export-btn').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(progress, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const stamp = new Date().toISOString().slice(0,10);
+    a.href = url;
+    a.download = `skill-progress-${stamp}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Import
+  document.getElementById('import-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        if (typeof parsed !== 'object' || parsed === null) throw new Error('Invalid format');
+        if (!confirm('Import this file? Your current progress will be replaced.')) {
+          e.target.value = '';
+          return;
+        }
+        progress = parsed;
+        save();
+        // Re-sync UI without full reload
+        rows.forEach(tr => {
+          const id = tr.getAttribute('data-skill-id');
+          const data = getSkillData(id);
+          const cb = tr.querySelector('input[type=checkbox]');
+          const dt = tr.querySelector('input[type=date]');
+          const btn = tr.querySelector('.desc-btn');
+          cb.checked = !!data.done;
+          dt.value = data.date || '';
+          btn.classList.toggle('has-note', !!(data.note && data.note.trim()));
+          tr.classList.toggle('done', !!data.done);
+        });
+        updateProgress();
+      } catch(err){
+        alert('Could not read that file as progress JSON.\n\n' + err.message);
+      }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  // Reset
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    if (!confirm('Clear ALL progress? Export first if you want to keep it.')) return;
+    progress = {};
+    save();
+    rows.forEach(tr => {
+      const cb = tr.querySelector('input[type=checkbox]');
+      const dt = tr.querySelector('input[type=date]');
+      const btn = tr.querySelector('.desc-btn');
+      cb.checked = false;
+      dt.value = '';
+      btn.classList.remove('has-note');
+      tr.classList.remove('done');
+    });
+    updateProgress();
+  });
+})();
+</script>
+
+</body>
+</html>
