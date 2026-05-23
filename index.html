@@ -263,17 +263,161 @@
   .modal-actions button.primary:hover{background:#9a3308}
   .modal-actions button.secondary:hover{background:var(--ink);color:var(--paper)}
 
+  /* === Login overlay (non-dismissible) === */
+  .login-overlay{
+    position:fixed;inset:0;z-index:999;
+    background:linear-gradient(135deg,#0e1014 0%,#1a1c20 100%);
+    display:flex;align-items:center;justify-content:center;padding:24px;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
+  }
+  .login-overlay.hidden{display:none}
+  .login-card{
+    background:var(--paper);
+    border:1px solid var(--rule);border-top:6px solid var(--accent);
+    max-width:420px;width:100%;padding:36px 32px 28px;
+    box-shadow:0 20px 60px rgba(0,0,0,.4), 0 8px 16px rgba(0,0,0,.2);
+    position:relative
+  }
+  .login-card::before{
+    content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:6px;
+    background:linear-gradient(90deg,var(--accent) 0%,#e76418 50%,var(--accent) 100%);
+    background-size:200% 100%;animation:loginShimmer 4s linear infinite
+  }
+  @keyframes loginShimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  .login-eyebrow{
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px
+  }
+  .login-eyebrow .lock{font-size:12px}
+  .login-card h2{
+    font-family:"Fraunces",serif;font-size:28px;font-weight:800;margin:0 0 6px;letter-spacing:-.02em
+  }
+  .login-card .login-tag{
+    font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--muted);margin:0 0 24px
+  }
+  .login-field{margin-bottom:14px}
+  .login-field label{
+    display:block;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:600
+  }
+  .login-field input{
+    width:100%;border:1.5px solid var(--rule);background:var(--paper-2);
+    font-family:"JetBrains Mono",monospace;font-size:15px;padding:11px 14px;color:var(--ink);
+    transition:border-color .15s ease, box-shadow .2s ease, background .2s ease
+  }
+  .login-field input:focus{
+    outline:none;border-color:var(--accent);background:#fff;
+    box-shadow:0 0 0 3px rgba(194,65,12,.15)
+  }
+  .login-error{
+    display:none;background:#fef2f2;border:1px solid #fecaca;color:var(--red);
+    padding:10px 12px;font-size:13px;margin:4px 0 12px;
+    font-family:"Inter Tight",sans-serif
+  }
+  .login-error.show{display:block;animation:shake .35s ease}
+  @keyframes shake{
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-6px)}
+    75%{transform:translateX(6px)}
+  }
+  .login-submit{
+    width:100%;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.15em;
+    text-transform:uppercase;font-weight:700;padding:13px;border:none;
+    background:linear-gradient(180deg,#d8590f 0%,#a93709 100%);color:white;cursor:pointer;
+    transition:transform .1s ease, box-shadow .2s ease, background .2s ease;
+    margin-top:8px;
+    box-shadow:0 2px 4px rgba(169,55,9,.3), inset 0 1px 0 rgba(255,255,255,.15)
+  }
+  .login-submit:hover{
+    background:linear-gradient(180deg,#e76418 0%,#b53d0b 100%);
+    box-shadow:0 4px 12px rgba(169,55,9,.4), inset 0 1px 0 rgba(255,255,255,.2)
+  }
+  .login-submit:active{transform:scale(.98)}
+  .login-footer{
+    font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+    color:#a8a08e;text-align:center;margin-top:20px;padding-top:16px;border-top:1px dashed #d4cab6
+  }
+
+  /* Lock body scroll while overlay is up */
+  body.locked{overflow:hidden}
+
   /* Hide interactive bits when printing — back to clean reference layout */
   @media print{
     .toolbar{display:none}
     .track-col, .track-cell{display:none}
     tr.done td{background:transparent;color:var(--ink)}
     tr.done td.skill-cell{color:var(--ink)}
+    .login-overlay{display:none !important}
+  }
+
+  /* === Sync status indicator === */
+  .sync-status{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    padding:6px 10px;border:1px solid var(--rule);background:var(--paper);
+    color:var(--muted);font-weight:600;white-space:nowrap;cursor:pointer;
+    transition:all .15s ease
+  }
+  .sync-status:hover{background:var(--ink);color:var(--paper)}
+  .sync-status .sync-dot{
+    width:7px;height:7px;border-radius:50%;background:#9a9180;flex-shrink:0;transition:background .2s ease
+  }
+  .sync-status.synced .sync-dot{background:#15803d;box-shadow:0 0 0 2px rgba(21,128,61,.18)}
+  .sync-status.saving .sync-dot{background:#facc15;animation:pulse 1s ease-in-out infinite}
+  .sync-status.error .sync-dot{background:var(--red)}
+  .sync-status.offline .sync-dot{background:#9a9180}
+  @keyframes pulse{
+    0%,100%{opacity:1} 50%{opacity:.4}
+  }
+  .sync-status .user-tag{
+    color:var(--accent-3);font-weight:700;margin-left:4px
+  }
+
+  /* === User-ID input within modal === */
+  .modal input[type=text]{
+    width:100%;border:1.5px solid var(--rule);background:var(--paper-2);
+    font-family:"JetBrains Mono",monospace;font-size:14px;padding:10px 12px;color:var(--ink);
+    transition:border-color .15s ease, box-shadow .2s ease
+  }
+  .modal input[type=text]:focus{
+    outline:none;border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(194,65,12,.15);background:#fff
+  }
+  .modal .hint{
+    font-family:"Inter Tight",sans-serif;font-size:13px;color:var(--muted);
+    margin:10px 0 14px;line-height:1.5
+  }
+  .modal .hint code{
+    font-family:"JetBrains Mono",monospace;font-size:12px;background:var(--paper-2);
+    padding:2px 6px;border:1px solid var(--rule);border-radius:3px;color:var(--accent)
   }
 
 </style>
 </head>
-<body>
+<body class="locked">
+
+<!-- ========== LOGIN OVERLAY (non-dismissible) ========== -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-card">
+    <div class="login-eyebrow"><span class="lock">🔒</span> Restricted access</div>
+    <h2>Sign in</h2>
+    <p class="login-tag">Personal study tracker — credentials required to view</p>
+    <form id="login-form" autocomplete="off">
+      <div class="login-field">
+        <label for="login-user">Username</label>
+        <input type="text" id="login-user" autocomplete="username" spellcheck="false" autocapitalize="off" required>
+      </div>
+      <div class="login-field">
+        <label for="login-pass">Password</label>
+        <input type="password" id="login-pass" autocomplete="current-password" required>
+      </div>
+      <div class="login-error" id="login-error">Incorrect username or password.</div>
+      <button type="submit" class="login-submit">Unlock</button>
+    </form>
+    <div class="login-footer">studyai · onsaurav</div>
+  </div>
+</div>
+
 <div class="wrap">
 
   <!-- ========== TOOLBAR ========== -->
@@ -283,6 +427,11 @@
       <span><span id="done-count">0</span> / <span id="total-count">0</span> done</span>
     </div>
     <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+    <div class="sync-status offline" id="sync-status" title="Click to set / change user ID">
+      <span class="sync-dot"></span>
+      <span id="sync-text">Setup</span>
+      <span class="user-tag" id="user-tag"></span>
+    </div>
     <button id="export-btn" title="Download your progress as JSON">↓ Export</button>
     <label class="file-btn" title="Load a previously exported JSON">↑ Import<input type="file" id="import-input" accept=".json,application/json"></label>
     <button id="reset-btn" class="danger" title="Clear all progress">⟲ Reset</button>
@@ -594,22 +743,195 @@
     </div>
   </div>
 
+  <!-- ========== USER-ID SETUP MODAL ========== -->
+  <div class="modal-backdrop" id="user-modal">
+    <div class="modal">
+      <h3>Sync setup</h3>
+      <div class="modal-sub">Cloud progress · Supabase</div>
+      <p class="hint">
+        Pick a <strong>user ID</strong> for your progress. Use the same ID on every device
+        (phone, laptop, tablet) and your check marks, dates, and notes will sync automatically.
+        Example: <code>kartik</code> or <code>onsaurav</code>.
+      </p>
+      <input type="text" id="user-input" placeholder="kartik" autocomplete="off" spellcheck="false">
+      <p class="hint" id="user-hint" style="display:none;color:var(--red)">User ID must be at least 3 characters, letters/numbers/hyphens/underscores only.</p>
+      <div class="modal-actions">
+        <button class="secondary" id="user-cancel">Use offline only</button>
+        <button class="primary" id="user-save">Connect</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
 (function(){
-  const STORAGE_KEY = "kartik_skill_progress_v1";
+  // === LOGIN GATE ===
+  // NOTE: Client-side authentication is cosmetic, not security.
+  // Anyone with DevTools can read these values. This is a "please don't"
+  // sign for casual visitors to a public URL, nothing more.
+  const VALID_USER = "onsaurav";
+  const VALID_PASS = "ons.STD.775";
+  const SESSION_KEY = "kartik_studyai_authed_v1";
 
-  // Load existing progress from localStorage
+  const overlay = document.getElementById('login-overlay');
+  const form = document.getElementById('login-form');
+  const userInput = document.getElementById('login-user');
+  const passInput = document.getElementById('login-pass');
+  const errorEl = document.getElementById('login-error');
+
+  function unlock(){
+    overlay.classList.add('hidden');
+    document.body.classList.remove('locked');
+    // Tell the main app it can run now
+    window.__studyaiAuthed = true;
+    window.dispatchEvent(new CustomEvent('studyai:authed'));
+  }
+
+  // Already authenticated this session? Skip the overlay.
+  try {
+    if (sessionStorage.getItem(SESSION_KEY) === '1'){
+      unlock();
+      return;
+    }
+  } catch(e){}
+
+  // Otherwise show login and focus username field
+  setTimeout(() => userInput.focus(), 100);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const u = userInput.value.trim();
+    const p = passInput.value;
+    if (u === VALID_USER && p === VALID_PASS){
+      errorEl.classList.remove('show');
+      try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e){}
+      unlock();
+    } else {
+      errorEl.classList.remove('show');
+      // Reflow so animation re-triggers on repeated failures
+      void errorEl.offsetWidth;
+      errorEl.classList.add('show');
+      passInput.value = '';
+      passInput.focus();
+    }
+  });
+
+  // Intercept Escape to make sure nothing weird happens (overlay is not closeable)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !overlay.classList.contains('hidden')){
+      e.preventDefault();
+    }
+  });
+})();
+</script>
+
+<script>
+function __studyaiMain(){
+(function(){
+  // ============================================================
+  // CONFIGURATION — Supabase credentials are embedded here.
+  // The publishable key is safe in client-side code; Row Level
+  // Security policies on the database control what's allowed.
+  // ============================================================
+  const SUPABASE_URL = "https://kasgylewkoshecmogjbe.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_t9uzyok_23v-yjSL5KHQQQ_ziWs8VVS";
+  const SUPABASE_TABLE = "progress";
+
+  const STORAGE_KEY = "kartik_skill_progress_v1";
+  const USER_ID_KEY = "kartik_skill_user_id_v1";
+  const SETUP_DISMISSED_KEY = "kartik_skill_setup_dismissed_v1";
+
+  // Load existing progress from localStorage (always — works offline as fallback)
   let progress = {};
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) progress = JSON.parse(raw);
   } catch(e){ progress = {}; }
 
+  // Load user ID
+  let userId = "";
+  try { userId = localStorage.getItem(USER_ID_KEY) || ""; } catch(e){}
+
+  // ============================================================
+  // Sync status UI
+  // ============================================================
+  const syncEl = document.getElementById('sync-status');
+  const syncText = document.getElementById('sync-text');
+  const userTag = document.getElementById('user-tag');
+
+  function setSyncState(state, text){
+    syncEl.classList.remove('synced','saving','error','offline');
+    syncEl.classList.add(state);
+    syncText.textContent = text;
+    userTag.textContent = userId ? '· ' + userId : '';
+  }
+
+  // ============================================================
+  // Supabase REST helpers (no SDK needed — just fetch)
+  // ============================================================
+  const headers = () => ({
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  });
+
+  async function cloudLoad(){
+    if (!userId) return null;
+    try {
+      const url = `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}?user_id=eq.${encodeURIComponent(userId)}&select=data,updated_at`;
+      const res = await fetch(url, { headers: headers() });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const rows = await res.json();
+      if (rows && rows.length > 0) return rows[0].data;
+      return {}; // user exists in code but no row yet
+    } catch(e){
+      console.warn('cloudLoad failed:', e);
+      throw e;
+    }
+  }
+
+  async function cloudSave(data){
+    if (!userId) return;
+    // Upsert: insert if missing, update if present
+    const url = `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}?on_conflict=user_id`;
+    const body = JSON.stringify({
+      user_id: userId,
+      data: data,
+      updated_at: new Date().toISOString()
+    });
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { ...headers(), 'Prefer': 'resolution=merge-duplicates' },
+      body: body
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status + ' ' + (await res.text()));
+  }
+
+  // Debounced save — avoid hammering the API on every checkbox click
+  let saveTimer = null;
+  function scheduleCloudSave(){
+    if (!userId) return;
+    if (saveTimer) clearTimeout(saveTimer);
+    setSyncState('saving', 'Saving');
+    saveTimer = setTimeout(async () => {
+      try {
+        await cloudSave(progress);
+        setSyncState('synced', 'Synced');
+      } catch(e){
+        setSyncState('error', 'Error');
+        console.error('Save failed:', e);
+      }
+    }, 1200);
+  }
+
   function save(){
+    // Always save locally immediately
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
     catch(e){ console.warn("localStorage save failed", e); }
+    // Then schedule cloud save
+    scheduleCloudSave();
   }
 
   function getSkillData(id){
@@ -794,7 +1116,136 @@
     });
     updateProgress();
   });
+
+  // ============================================================
+  // USER ID MODAL — setup & change
+  // ============================================================
+  const userModal = document.getElementById('user-modal');
+  const userInput = document.getElementById('user-input');
+  const userHint = document.getElementById('user-hint');
+
+  function openUserModal(){
+    userInput.value = userId || '';
+    userHint.style.display = 'none';
+    userModal.classList.add('open');
+    setTimeout(() => userInput.focus(), 50);
+  }
+  function closeUserModal(){ userModal.classList.remove('open'); }
+
+  syncEl.addEventListener('click', openUserModal);
+  document.getElementById('user-cancel').addEventListener('click', () => {
+    // Remember dismissal so we don't auto-open every visit
+    try { localStorage.setItem(SETUP_DISMISSED_KEY, '1'); } catch(e){}
+    closeUserModal();
+  });
+  userModal.addEventListener('click', (e) => { if (e.target === userModal) closeUserModal(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && userModal.classList.contains('open')) closeUserModal();
+    if (e.key === 'Enter' && userModal.classList.contains('open')){
+      document.getElementById('user-save').click();
+    }
+  });
+
+  document.getElementById('user-save').addEventListener('click', async () => {
+    const val = userInput.value.trim().toLowerCase();
+    if (!/^[a-z0-9_-]{3,40}$/.test(val)){
+      userHint.style.display = 'block';
+      return;
+    }
+    const oldId = userId;
+    userId = val;
+    localStorage.setItem(USER_ID_KEY, userId);
+    closeUserModal();
+    setSyncState('saving', 'Connecting');
+
+    // If this is a fresh connection (no previous user), try to load cloud data
+    // and merge with local. If user is changing IDs, prefer cloud data for the new ID.
+    try {
+      const cloudData = await cloudLoad();
+      if (cloudData && Object.keys(cloudData).length > 0){
+        // Cloud has data for this user — adopt it
+        progress = cloudData;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        // Re-sync UI
+        rows.forEach(tr => {
+          const id = tr.getAttribute('data-skill-id');
+          const data = getSkillData(id);
+          const cb = tr.querySelector('input[type=checkbox]');
+          const dt = tr.querySelector('input[type=date]');
+          const btn = tr.querySelector('.desc-btn');
+          cb.checked = !!data.done;
+          dt.value = data.date || '';
+          btn.classList.toggle('has-note', !!(data.note && data.note.trim()));
+          tr.classList.toggle('done', !!data.done);
+        });
+        updateProgress();
+        setSyncState('synced', 'Synced');
+      } else {
+        // No cloud data yet — push current local data up
+        await cloudSave(progress);
+        setSyncState('synced', 'Synced');
+      }
+    } catch(e){
+      setSyncState('error', 'Error');
+      console.error('Initial sync failed:', e);
+    }
+  });
+
+  // ============================================================
+  // STARTUP — load from cloud if user is configured, else prompt (once)
+  // ============================================================
+  (async function init(){
+    if (!userId){
+      setSyncState('offline', 'Setup');
+      // Auto-open setup modal ONLY on first visit. If user has already
+      // dismissed it once (chose "Use offline only"), they can re-open
+      // anytime by clicking the sync indicator.
+      let dismissed = false;
+      try { dismissed = localStorage.getItem(SETUP_DISMISSED_KEY) === '1'; } catch(e){}
+      if (!dismissed){
+        setTimeout(openUserModal, 400);
+      }
+      return;
+    }
+    setSyncState('saving', 'Loading');
+    try {
+      const cloudData = await cloudLoad();
+      if (cloudData && Object.keys(cloudData).length > 0){
+        progress = cloudData;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        // Re-sync UI with cloud data
+        rows.forEach(tr => {
+          const id = tr.getAttribute('data-skill-id');
+          const data = getSkillData(id);
+          const cb = tr.querySelector('input[type=checkbox]');
+          const dt = tr.querySelector('input[type=date]');
+          const btn = tr.querySelector('.desc-btn');
+          cb.checked = !!data.done;
+          dt.value = data.date || '';
+          btn.classList.toggle('has-note', !!(data.note && data.note.trim()));
+          tr.classList.toggle('done', !!data.done);
+        });
+        updateProgress();
+      } else if (Object.keys(progress).length > 0){
+        // Cloud is empty but we have local — push local up
+        await cloudSave(progress);
+      }
+      setSyncState('synced', 'Synced');
+    } catch(e){
+      setSyncState('error', 'Offline');
+      console.error('Initial load failed:', e);
+    }
+  })();
+
 })();
+}  // end __studyaiMain
+
+// Wait for login gate before running the app
+if (window.__studyaiAuthed){
+  __studyaiMain();
+} else {
+  window.addEventListener('studyai:authed', __studyaiMain, { once: true });
+}
 </script>
 
 </body>
