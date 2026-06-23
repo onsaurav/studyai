@@ -956,11 +956,12 @@ function __studyaiMain(){
     cb.checked = !!data.done;
     cb.title = 'Mark as done';
     cb.addEventListener('change', () => {
-      data.done = cb.checked;
+      const currentData = getSkillData(id);
+      currentData.done = cb.checked;
       // Auto-fill today's date when first checked, if no date yet
-      if (cb.checked && !data.date){
+      if (cb.checked && !currentData.date){
         const today = new Date().toISOString().slice(0,10);
-        data.date = today;
+        currentData.date = today;
         dateInput.value = today;
       }
       tr.classList.toggle('done', cb.checked);
@@ -974,7 +975,8 @@ function __studyaiMain(){
     dateInput.value = data.date || '';
     dateInput.title = 'Completion date';
     dateInput.addEventListener('change', () => {
-      data.date = dateInput.value;
+      const currentData = getSkillData(id);
+      currentData.date = dateInput.value;
       save();
     });
 
