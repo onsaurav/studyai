@@ -1,8 +1,22 @@
 # studyai
 
-A single-page study tracker for Kartik's AI Architect roadmap.
+A single-page study tracker for Kartik's **AI/Cloud Solution Architect — Definitive Roadmap 2026**.
 
 The app is hosted as a static `index.html` file, usually through GitHub Pages. Progress is saved locally in the browser first, then optionally synced to Supabase so the same checklist, dates, and notes can be used across devices.
+
+## The Roadmap (v2, July 2026)
+
+The content follows the "Definitive Roadmap" PDF — two source lists merged into one personalised plan:
+
+- **12 domains**, ~429 focused hours, roughly 35 weeks at 10–15 h/week.
+- Priorities are `P1` (must do), `P2` (important, after P1s), `P3` (awareness only — read, don't practise).
+- Every topic has a **How** (Read / Build / Design / Experiment), a specific **Resource**, and a concrete **Build this project** artefact — mostly tied to Project Sentinel.
+- Three domains are entirely new vs the original list: D05 SRE & Deep Observability, D06 Distributed Systems Depth, D07 AI Governance; D11 FinOps is split out as its own domain. Items added vs the original lists carry a blue `★ new` badge.
+- A "Recommended Study Sequence" table at the top gives the week-by-week order (start with the D04 golden dataset + RAGAS baseline, not with theory).
+
+### Roadmap v1 → v2 migration
+
+The v2 rewrite replaced the old 11-domain "Master Skill List" (~1,400 h). Because the topics changed, skill IDs are now prefixed `v2-` and the localStorage key was bumped to `kartik_skill_progress_v2`. Old v1 progress is **not** shown in the new tracker (the rows it referred to no longer exist), but it is not deleted either — v1 keys remain in localStorage and in the Supabase `data` JSON, so nothing is lost.
 
 ## How It Works
 
